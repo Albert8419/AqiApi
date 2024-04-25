@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: AQI API
+  version: 1.0.0
+  description: A simple API to fetch air quality information for a specific city
+servers:
+  - url: http://localhost:3000/api
+    description: Local server
+paths:
+  /aqi/{city}:
+    get:
+      summary: Get air quality data for a city
+      description: Fetches air quality data for the specified city.
+      parameters:
+        - in: path
+          name: city
+          required: true
+          schema:
+            type: string
+          description: City for which to fetch the air quality
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  airQualityIndex:
+                    type: number
+                    description: Current air quality index.
+                    example: 80
+                  pollutants:
+                    type: object
+                    description: Current pollutants data.
+                  otherProperties:
+                    type: string
+                    description: Other properties specific to air quality data.
+        '404':
+          description: City not found
+        '500':
+          description: Server error
